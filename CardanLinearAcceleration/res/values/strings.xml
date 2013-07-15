@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CardanLinearAcceleration</string>
+    <string name="action_settings">Settings</string>
+    <string name="filter_settings">Filters</string>
+    <string name="fusion_label">Fusion</string>
+    <string name="acceleration_name">Acceleration</string>
+    <string name="cardan_name">Cardan</string>
+    <string name="sensor_name">Sensor</string>
+    <string name="developer_url">KircherElectronics.com</string>
+    <string name="log_data_label">Log Data</string>
+    <string name="default_value">0.00</string>
+    <string name="rms_accel_label">RMS Accel:</string>
+    <string name="rms_wiki_label">RMS Wiki:</string>
+    <string name="rms_and_dev_label">RMS AndDev:</string>
+    <string name="rms_static">RMS Static:</string>
+    <string name="rms_dynamic">RMS Dynamic:</string>
+    <string name="dynamic_alpha">Dynamic Alpha</string>
+    <string name="static_alpha">Static Alpha:</string>
+
+</resources>
