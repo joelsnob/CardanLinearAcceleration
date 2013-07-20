@@ -1,4 +1,4 @@
-package com.kircherelectronics.cardanlinearacceleration;
+package com.kircherelectronics.cardanlinearacceleration.statistics;
 
 /*
  * Cardan Linear Acceleration
@@ -22,6 +22,8 @@ import java.util.LinkedList;
 
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+
+import com.kircherelectronics.cardanlinearacceleration.CardanLinearAccelerationActivity;
 
 import android.util.Log;
 

@@ -169,15 +169,15 @@
                     android:layout_centerHorizontal="true" >
 
                     <RelativeLayout
+                        android:id="@+id/layout_acceleration_tilt"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/layout_acceleration_tilt">
+                        android:layout_height="wrap_content" >
 
                         <RelativeLayout
                             android:id="@+id/label_acceleration_tilt"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" 
-                            android:layout_centerHorizontal="true">
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true" >
 
                             <TextView
                                 android:id="@+id/label_acceleration_name"
@@ -198,24 +198,30 @@
                                 android:textAppearance="?android:attr/textAppearanceSmall" />
                         </RelativeLayout>
 
-                        <com.kircherelectronics.cardanlinearacceleration.GaugeRotationHolo
-                            android:id="@+id/gauge_acceleration"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
+                        <com.kircherelectronics.cardanlinearacceleration.gauge.GaugeRotationHolo
+                            android:id="@+id/gauge_acceleration_tilt"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
                             android:layout_below="@+id/label_acceleration_tilt" />
+
+                        <com.kircherelectronics.cardanlinearacceleration.gauge.GaugeAccelerationHolo
+                            android:id="@+id/gauge_acceleration"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_below="@+id/gauge_acceleration_tilt" />
                     </RelativeLayout>
-                    
-                     <RelativeLayout
+
+                    <RelativeLayout
+                        android:id="@+id/layout_lpf_tilt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/layout_lpf_tilt"
-                        android:layout_toRightOf="@+id/layout_acceleration_tilt">
+                        android:layout_toRightOf="@+id/layout_acceleration_tilt" >
 
                         <RelativeLayout
                             android:id="@+id/label_lpf_tilt"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" 
-                            android:layout_centerHorizontal="true">
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true" >
 
                             <TextView
                                 android:id="@+id/label_lpf_name"
@@ -236,14 +242,18 @@
                                 android:textAppearance="?android:attr/textAppearanceSmall" />
                         </RelativeLayout>
 
-                        <com.kircherelectronics.cardanlinearacceleration.GaugeRotationHolo
-                            android:id="@+id/gauge_lpf"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
+                        <com.kircherelectronics.cardanlinearacceleration.gauge.GaugeRotationHolo
+                            android:id="@+id/gauge_linear_acceleration_tilt"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
                             android:layout_below="@+id/label_lpf_tilt" />
+                        
+                             <com.kircherelectronics.cardanlinearacceleration.gauge.GaugeAccelerationHolo
+                            android:id="@+id/gauge_linear_acceleration"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_below="@+id/gauge_linear_acceleration_tilt" />
                     </RelativeLayout>
-
-                   
                 </RelativeLayout>
             </RelativeLayout>
 

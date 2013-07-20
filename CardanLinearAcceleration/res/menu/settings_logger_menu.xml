@@ -2,7 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_settings_logger_plotdata"
-        android:title="@string/log_data_label"/>
+        android:id="@+id/menu_settings"
+        android:showAsAction="always"
+        android:title="@string/action_settings">
+        <menu>
+            <item
+                android:id="@+id/menu_settings_logger_plotdata"
+                android:title="@string/log_data_label"/>
+            <item
+                android:id="@+id/menu_settings_filter"
+                android:title="@string/filter_settings"/>
+            <item
+                android:id="@+id/menu_settings_help"
+                android:title="@string/filter_help"/>
+        </menu>
+    </item>
 
 </menu>

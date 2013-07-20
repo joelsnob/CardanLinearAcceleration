@@ -1,4 +1,7 @@
-package com.kircherelectronics.cardanlinearacceleration;
+package com.kircherelectronics.cardanlinearacceleration.plot;
+
+import com.kircherelectronics.cardanlinearacceleration.R;
+import com.kircherelectronics.cardanlinearacceleration.R.color;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.kircherelectronics.cardanlinearacceleration;
+package com.kircherelectronics.cardanlinearacceleration.plot;
 
 import java.util.LinkedList;
 

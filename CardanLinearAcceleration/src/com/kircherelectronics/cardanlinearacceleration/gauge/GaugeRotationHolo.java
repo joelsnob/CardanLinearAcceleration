@@ -1,4 +1,4 @@
-package com.kircherelectronics.cardanlinearacceleration;
+package com.kircherelectronics.cardanlinearacceleration.gauge;
 
 import android.content.Context;
 import android.graphics.Bitmap;

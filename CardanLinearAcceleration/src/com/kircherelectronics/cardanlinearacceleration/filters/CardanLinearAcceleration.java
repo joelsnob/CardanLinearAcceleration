@@ -1,5 +1,10 @@
-package com.kircherelectronics.cardanlinearacceleration;
+package com.kircherelectronics.cardanlinearacceleration.filters;
 
+import com.kircherelectronics.cardanlinearacceleration.statistics.StdDev;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.SensorManager;
 import android.util.Log;
 
@@ -23,7 +28,8 @@ import android.util.Log;
 
 /**
  * An implementation of a accelerometer magnetometer sensor fusion. The
- * algorithm determines the linear acceleration of the device by using Cardan angles.
+ * algorithm determines the linear acceleration of the device by using Cardan
+ * angles.
  * 
  * @author Kaleb
  * @see http://en.wikipedia.org/wiki/Low-pass_filter
@@ -31,6 +37,12 @@ import android.util.Log;
  */
 public class CardanLinearAcceleration
 {
+
+	private boolean lpfAccelerationActive = false;
+	private boolean lpfMagneticActive = false;
+
+	private boolean meanFilterAccelerationActive = false;
+	private boolean meanFilterMagneticActive = false;
 
 	// The gravity components of the acceleration signal.
 	private float[] components = new float[3];
@@ -46,6 +58,12 @@ public class CardanLinearAcceleration
 	private float[] magnetic = new float[]
 	{ 0, 0, 0 };
 
+	private LowPassFilter lpfAcceleration;
+	private LowPassFilter lpfMagnetic;
+
+	private MeanFilter meanFilterAcceleration;
+	private MeanFilter meanFilterMagnetic;
+
 	// The rotation matrix R transforming a vector from the device
 	// coordinate system to the world's coordinate system which is
 	// defined as a direct orthonormal basis. R is the identity
@@ -60,9 +78,21 @@ public class CardanLinearAcceleration
 
 	private StdDev varianceAccel;
 
-	public CardanLinearAcceleration()
+	private Context context;
+
+	public CardanLinearAcceleration(Context context,
+			LowPassFilter lpfAcceleration, LowPassFilter lpfMagnetic,
+			MeanFilter meanFilterAcceleration, MeanFilter meanFilterMagnetic)
 	{
 		super();
+
+		this.context = context;
+		this.lpfAcceleration = lpfAcceleration;
+		this.lpfMagnetic = lpfMagnetic;
+		this.meanFilterAcceleration = meanFilterAcceleration;
+		this.meanFilterMagnetic = meanFilterMagnetic;
+
+		readPrefs();
 
 		// Create the RMS Noise calculations
 		varianceAccel = new StdDev();
@@ -81,12 +111,36 @@ public class CardanLinearAcceleration
 		System.arraycopy(acceleration, 0, this.acceleration, 0,
 				acceleration.length);
 
+		if (lpfAccelerationActive)
+		{
+			System.arraycopy(lpfAcceleration.addSamples(this.acceleration), 0,
+					this.acceleration, 0, this.acceleration.length);
+		}
+
+		if (meanFilterAccelerationActive)
+		{
+			this.acceleration = meanFilterAcceleration
+					.filterFloat(this.acceleration);
+		}
+
 		// Get a local copy of the sensor values
-		System.arraycopy(magnetic, 0, this.magnetic, 0, acceleration.length);
+		System.arraycopy(magnetic, 0, this.magnetic, 0, magnetic.length);
+
+		if (lpfMagneticActive)
+		{
+			System.arraycopy(lpfMagnetic.addSamples(this.magnetic), 0,
+					this.magnetic, 0, this.magnetic.length);
+		}
+
+		if (meanFilterMagneticActive)
+		{
+			this.magnetic = meanFilterMagnetic.filterFloat(this.magnetic);
+		}
 
 		// Get the rotation matrix to put our local device coordinates
 		// into the world-coordinate system.
-		if (SensorManager.getRotationMatrix(r, null, acceleration, magnetic))
+		if (SensorManager.getRotationMatrix(r, null, this.acceleration,
+				this.magnetic))
 		{
 			// values[0]: azimuth/yaw, rotation around the Z axis.
 			// values[1]: pitch, rotation around the X axis.
@@ -143,5 +197,45 @@ public class CardanLinearAcceleration
 		}
 
 		return linearAcceleration;
+	}
+
+	public void setLpfAccelerationActive(boolean lpfAccelerationActive)
+	{
+		this.lpfAccelerationActive = lpfAccelerationActive;
+	}
+
+	public void setLpfMagneticActive(boolean lpfMagneticActive)
+	{
+		this.lpfMagneticActive = lpfMagneticActive;
+	}
+
+	public void setMeanFilterAccelerationActive(
+			boolean meanFilterAccelerationActive)
+	{
+		this.meanFilterAccelerationActive = meanFilterAccelerationActive;
+	}
+
+	public void setMeanFilterMagneticActive(boolean meanFilterMagneticActive)
+	{
+		this.meanFilterMagneticActive = meanFilterMagneticActive;
+	}
+
+	/**
+	 * Read in the current user preferences.
+	 */
+	private void readPrefs()
+	{
+		SharedPreferences prefs = this.context.getSharedPreferences(
+				"filter_prefs", Activity.MODE_PRIVATE);
+
+		this.lpfAccelerationActive = prefs
+				.getBoolean("lpf_acceleration", false);
+		this.lpfMagneticActive = prefs.getBoolean("lpf_magnetic", false);
+
+		this.meanFilterAccelerationActive = prefs.getBoolean(
+				"mean_filter_acceleration", false);
+		this.meanFilterMagneticActive = prefs.getBoolean(
+				"mean_filter_magnetic", false);
+
 	}
 }
